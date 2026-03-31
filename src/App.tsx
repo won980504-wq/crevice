@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Mail, Phone, MapPin, Calendar, ExternalLink, ArrowRight, ArrowLeft } from "lucide-react";
-import { BrowserRouter, Routes, Route, Link, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 const ScrollToTop = () => {
@@ -142,12 +142,12 @@ const Profile = () => (
   </section>
 );
 
-const ProjectCard = ({ title, period, role, tools, description, image, tags }) => (
+const ProjectCard = ({ id, title, period, role, tools, description, image, tags }) => (
   <motion.div 
     whileHover={{ y: -10 }}
     className="group border-b border-line pb-12 mb-12 last:border-0"
   >
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+    <Link to={`/project/${id}`} className="grid grid-cols-1 lg:grid-cols-12 gap-8">
       <div className="lg:col-span-7">
         <div className="aspect-video bg-line overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
           <img 
@@ -186,7 +186,7 @@ const ProjectCard = ({ title, period, role, tools, description, image, tags }) =
           ))}
         </div>
       </div>
-    </div>
+    </Link>
   </motion.div>
 );
 
@@ -200,16 +200,18 @@ const Projects = () => (
     </div>
 
     <ProjectCard 
+      id="nolpang"
       title="NOLPANG"
       period="2024.03 - 2024.10"
       role="Branding, UX Research, UI Design, Prototyping"
       tools="Figma, Illustrator, Photoshop, ChatGPT"
       description="아이의 놀이와 관련된 정보를 한곳에서 찾고 계획을 수립할 수 있도록 돕는 위치 기반 종합 놀이 정보 플랫폼. 사용자 페르소나 구축 및 페인포인트 분석을 통해 UI 디자인 시스템을 확립했습니다."
-      image="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&q=80&w=1000"
+      image="https://raw.githubusercontent.com/won980504-wq/crevice/9a4cf503913974fb9fac6acc90a2c863b2bb5ca6/4.png"
       tags={["Platform", "Mobile App", "Branding"]}
     />
 
     <ProjectCard 
+      id="eat-da"
       title="EAT DA (잇다)"
       period="2021.02 - 2021.03"
       role="UI Design, UX Research, Prototyping"
@@ -220,6 +222,7 @@ const Projects = () => (
     />
 
     <ProjectCard 
+      id="jogyesa"
       title="Jogyesa Goods"
       period="2023.05"
       role="Product Design, Prototyping"
@@ -230,6 +233,7 @@ const Projects = () => (
     />
 
     <ProjectCard 
+      id="kfa-u-league"
       title="KFA U-LEAGUE Design"
       period="2023.03 - 2023.10"
       role="Lead Designer (MKPLUS)"
@@ -405,6 +409,140 @@ const PhilosophyPage = () => (
   </motion.div>
 );
 
+const ProjectDetailPage = () => {
+  const { id } = useParams();
+  
+  // Project data mapping
+  const projects = {
+    "nolpang": {
+      title: "NOLPANG",
+      period: "2024.03 - 2024.10",
+      role: "Branding, UX Research, UI Design, Prototyping",
+      tools: "Figma, Illustrator, Photoshop, ChatGPT",
+      description: "아이의 놀이와 관련된 정보를 한곳에서 찾고 계획을 수립할 수 있도록 돕는 위치 기반 종합 놀이 정보 플랫폼.",
+      image: "https://raw.githubusercontent.com/won980504-wq/crevice/9a4cf503913974fb9fac6acc90a2c863b2bb5ca6/4.png",
+      details: [
+        {
+          subtitle: "Project Overview",
+          content: "NOLPANG은 부모들이 아이와 함께할 수 있는 놀이 공간과 프로그램을 쉽게 찾고, 일정을 관리할 수 있도록 돕는 서비스입니다. 파편화된 정보를 통합하여 사용자 경험의 '틈'을 메우는 것을 목표로 했습니다."
+        },
+        {
+          subtitle: "Design Strategy",
+          content: "친근하면서도 신뢰감 있는 브랜드 이미지를 위해 따뜻한 컬러 팔레트와 둥근 형태의 UI 요소를 사용했습니다. 위치 기반 검색 기능을 강화하여 실시간으로 주변 놀이 정보를 확인할 수 있도록 설계했습니다."
+        }
+      ]
+    },
+    "eat-da": {
+      title: "EAT DA (잇다)",
+      period: "2021.02 - 2021.03",
+      role: "UI Design, UX Research, Prototyping",
+      tools: "Figma, Illustrator, Photoshop",
+      description: "식단 관리가 필요한 20~30대 젊은 환자들을 위해 비대면 영양사 매칭 및 커뮤니티 소통 기능을 제공하는 플랫폼.",
+      image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?auto=format&fit=crop&q=80&w=1000",
+      details: [
+        {
+          subtitle: "Project Background",
+          content: "만성 질환을 앓고 있는 젊은 층이 늘어남에 따라, 일상적인 식단 관리의 중요성이 커졌습니다. 전문 영양사와의 연결을 통해 체계적인 관리를 돕는 서비스입니다."
+        }
+      ]
+    },
+    "jogyesa": {
+      title: "Jogyesa Goods",
+      period: "2023.05",
+      role: "Product Design, Prototyping",
+      tools: "Illustrator, Photoshop",
+      description: "조계사 대웅전 단청 무늬를 현대적으로 재구성한 굿즈 디자인.",
+      image: "https://images.unsplash.com/photo-1528154291023-a6525fabe5b4?auto=format&fit=crop&q=80&w=1000",
+      details: [
+        {
+          subtitle: "Design Concept",
+          content: "전통적인 단청의 화려함을 현대적인 미니멀리즘과 결합하여, 일상에서도 부담 없이 사용할 수 있는 라이프스타일 굿즈를 제안했습니다."
+        }
+      ]
+    },
+    "kfa-u-league": {
+      title: "KFA U-LEAGUE Design",
+      period: "2023.03 - 2023.10",
+      role: "Lead Designer (MKPLUS)",
+      tools: "Illustrator, Photoshop",
+      description: "대한축구협회 U-LEAGUE 및 하부 리그 브랜딩 시스템 구축.",
+      image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?auto=format&fit=crop&q=80&w=1000",
+      details: [
+        {
+          subtitle: "Branding System",
+          content: "리그의 역동성과 권위를 상징하는 비주얼 아이덴티티를 확립하고, 온/오프라인 전반에 걸친 일관된 디자인 가이드를 제작했습니다."
+        }
+      ]
+    }
+  };
+
+  const project = projects[id as keyof typeof projects];
+
+  if (!project) return <div>Project not found</div>;
+
+  return (
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="min-h-screen bg-paper pt-32 pb-20 px-6"
+    >
+      <div className="max-w-4xl mx-auto">
+        <Link to="/" className="inline-flex items-center gap-2 text-xs uppercase tracking-widest mb-12 hover:text-muted transition-colors">
+          <ArrowLeft size={16} /> Back to Home
+        </Link>
+        
+        <div className="mb-16">
+          <p className="text-xs font-mono text-muted uppercase tracking-tighter mb-4">{project.period}</p>
+          <h1 className="text-6xl lg:text-8xl font-sans mb-8 leading-none">{project.title}</h1>
+          <p className="text-xl text-muted max-w-2xl leading-relaxed">{project.description}</p>
+        </div>
+
+        <div className="aspect-video bg-line overflow-hidden mb-20">
+          <img 
+            src={project.image} 
+            alt={project.title}
+            className="w-full h-full object-cover"
+            referrerPolicy="no-referrer"
+          />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-20 border-b border-line pb-20">
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-muted mb-2">Role</p>
+            <p className="text-lg font-medium">{project.role}</p>
+          </div>
+          <div>
+            <p className="text-[10px] uppercase tracking-widest text-muted mb-2">Tools</p>
+            <p className="text-lg font-medium">{project.tools}</p>
+          </div>
+        </div>
+
+        <div className="space-y-20">
+          {project.details.map((detail, index) => (
+            <div key={index} className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+              <div className="lg:col-span-4">
+                <h3 className="text-xs uppercase tracking-widest text-muted">{detail.subtitle}</h3>
+              </div>
+              <div className="lg:col-span-8">
+                <p className="text-xl leading-relaxed text-muted">
+                  {detail.content}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-32 pt-20 border-t border-line text-center">
+          <Link to="/" className="text-xs uppercase tracking-widest font-bold border-b border-ink pb-1 hover:text-muted transition-colors">
+            View More Projects
+          </Link>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const MainPage = () => (
   <>
     <Navbar />
@@ -424,6 +562,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path="/philosophy" element={<PhilosophyPage />} />
+          <Route path="/project/:id" element={<ProjectDetailPage />} />
         </Routes>
       </div>
     </BrowserRouter>
